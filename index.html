@@ -3,18 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Objectif CAPET SII - Fiches de Révision</title>
+    <title>Générateur d'Exercices : Spécification ISO-GPS</title>
     <style>
         :root {
-            --primary: #1e293b;
-            --primary-light: #334155;
-            --accent: #2563eb;
-            --accent-hover: #1d4ed8;
+            --primary: #0f172a;
+            --primary-light: #1e293b;
+            --accent: #0284c7;
+            --accent-hover: #0369a1;
+            --success: #16a34a;
+            --error: #dc2626;
             --bg-site: #f8fafc;
             --bg-card: #ffffff;
-            --text-main: #0f172a;
-            --text-muted: #475569;
-            --border: #e2e8f0;
+            --text-main: #334155;
+            --border: #cbd5e1;
         }
 
         * {
@@ -27,473 +28,399 @@
         body {
             background-color: var(--bg-site);
             color: var(--text-main);
-            line-height: 1.6;
-            padding-bottom: 60px;
+            padding-bottom: 50px;
         }
 
         header {
             background: linear-gradient(135deg, var(--primary), var(--primary-light));
             color: white;
-            padding: 40px 20px;
+            padding: 30px 20px;
             text-align: center;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
         }
 
         header h1 {
-            font-size: 2.2rem;
-            margin-bottom: 10px;
-        }
-
-        header p {
-            color: #cbd5e1;
-            font-size: 1.1rem;
+            font-size: 1.8rem;
+            margin-bottom: 5px;
         }
 
         .container {
-            max-width: 1000px;
+            max-width: 850px;
             margin: 30px auto;
             padding: 0 20px;
         }
 
-        /* Système d'onglets */
-        .tabs {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin-bottom: 30px;
-            border-bottom: 2px solid var(--border);
-            padding-bottom: 15px;
-        }
-
-        .tab-btn {
-            background: none;
-            border: none;
-            padding: 10px 20px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: var(--text-muted);
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border-radius: 6px;
-        }
-
-        .tab-btn.active {
-            background-color: var(--accent);
-            color: white;
-        }
-
-        .tab-content {
-            display: none;
-        }
-
-        .tab-content.active {
-            display: block;
-        }
-
-        /* Style des Fiches en Accordéon */
-        .fiche {
-            background-color: var(--bg-card);
+        .card {
+            background: var(--bg-card);
             border: 1px solid var(--border);
             border-radius: 8px;
-            margin-bottom: 15px;
-            overflow: hidden;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-        }
-
-        .fiche-header {
-            background-color: var(--bg-card);
-            padding: 20px;
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 1.3rem;
-            font-weight: 600;
-            color: var(--primary);
-            user-select: none;
-            border-left: 5px solid var(--accent);
-            transition: background-color 0.2s;
-        }
-
-        .fiche-header:hover {
-            background-color: #f1f5f9;
-        }
-
-        .fiche-header::after {
-            content: '▼';
-            font-size: 0.9rem;
-            color: var(--text-muted);
-            transition: transform 0.3s;
-        }
-
-        .fiche.open .fiche-header::after {
-            transform: rotate(180deg);
-        }
-
-        .fiche-body {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s ease-out;
-            border-top: 0 solid var(--border);
-            background-color: #fafafa;
-        }
-
-        .fiche.open .fiche-body {
-            max-height: 2000px; /* Grande valeur pour permettre l'affichage */
-            border-top: 1px solid var(--border);
-        }
-
-        .fiche-content {
             padding: 25px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            margin-bottom: 25px;
         }
 
-        /* Typographie et éléments des fiches */
-        h3 {
-            color: var(--accent);
-            margin: 20px 0 10px 0;
+        .btn-group {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        button {
+            background-color: var(--accent);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        button:hover {
+            background-color: var(--accent-hover);
+        }
+
+        button.secondary {
+            background-color: #64748b;
+        }
+        button.secondary:hover {
+            background-color: #475569;
+        }
+
+        /* Cadre de simulation de dessin technique */
+        .drawing-box {
+            background: #f1f5f9;
+            border: 2px dashed #94a3b8;
+            border-radius: 6px;
+            padding: 20px;
+            margin: 20px 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 180px;
+        }
+
+        /* Style des cadres de tolérance GPS */
+        .gps-frame {
+            display: inline-flex;
+            border: 2px solid #000;
+            font-family: monospace;
+            font-size: 1.4rem;
+            font-weight: bold;
+            background: white;
+            color: black;
+        }
+
+        .gps-cell {
+            padding: 4px 10px;
+            border-right: 2px solid #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .gps-cell:last-child {
+            border-right: none;
+        }
+
+        .question-text {
             font-size: 1.1rem;
-            border-bottom: 1px solid var(--border);
-            padding-bottom: 5px;
-        }
-        h3:first-child { margin-top: 0; }
-
-        ul {
-            list-style-type: none;
-            padding-left: 0;
-        }
-
-        li {
-            position: relative;
-            padding-left: 20px;
-            margin-bottom: 8px;
-        }
-
-        li::before {
-            content: "•";
-            color: var(--accent);
-            font-weight: bold;
-            position: absolute;
-            left: 0;
-            top: 0;
-        }
-
-        .important {
-            font-weight: bold;
+            font-weight: 600;
+            margin-bottom: 15px;
             color: var(--primary);
         }
 
-        /* Tables de données */
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 15px 0;
-            background: white;
+        /* Choix multiples */
+        .options-list {
+            list-style: none;
+            margin-bottom: 20px;
         }
 
-        th, td {
+        .option-item {
+            background: #fff;
             border: 1px solid var(--border);
-            padding: 10px 12px;
-            text-align: left;
-            font-size: 0.95rem;
+            padding: 12px 15px;
+            border-radius: 6px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
         }
 
-        th {
-            background-color: var(--primary);
-            color: white;
+        .option-item:hover {
+            background: #f8fafc;
+            border-color: #94a3b8;
         }
 
-        tr:nth-child(even) {
-            background-color: #f8fafc;
+        .option-item input {
+            margin-right: 12px;
+            transform: scale(1.2);
         }
 
-        /* Formules mathématiques stylisées */
-        .formula {
-            background-color: #edf2f7;
-            padding: 8px 15px;
-            border-radius: 4px;
-            font-family: 'Times New Roman', Times, serif;
-            font-style: italic;
-            font-weight: bold;
-            display: inline-block;
-            margin: 5px 0;
-            color: #1a202c;
-        }
-
-        /* Zone d'avertissement / Pièges */
-        .piege-box {
-            background-color: #fff7ed;
-            border-left: 4px solid #ea580c;
+        /* Correction */
+        .feedback {
             padding: 15px;
+            border-radius: 6px;
             margin-top: 15px;
-            border-radius: 0 4px 4px 0;
+            display: none;
+            font-weight: 500;
         }
-        .piege-box title {
+
+        .feedback.correct {
             display: block;
+            background-color: #dcfce7;
+            border-left: 5px solid var(--success);
+            color: #15803d;
+        }
+
+        .feedback.wrong {
+            display: block;
+            background-color: #fee2e2;
+            border-left: 5px solid var(--error);
+            color: #b91c1c;
+        }
+
+        .explanation {
+            margin-top: 8px;
+            font-size: 0.95rem;
+            color: #475569;
+            font-weight: normal;
+        }
+
+        .badge {
+            background: #e2e8f0;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.85rem;
             font-weight: bold;
-            color: #c2410c;
-            margin-bottom: 5px;
+            text-transform: uppercase;
         }
     </style>
 </head>
 <body>
 
     <header>
-        <h1>Objectif CAPET SII</h1>
-        <p>Fiches de révision interactives — Option Ingénierie Mécanique</p>
+        <h1>Générateur d'Exercices ISO-GPS</h1>
+        <p>Entraînement au décodage de plans et à la cotation fonctionnelle (CAPET / BTS / IUT)</p>
     </header>
 
     <div class="container">
-        <div class="tabs">
-            <button class="tab-btn active" onclick="switchTab('sciences')">Sciences de l'Ingénieur</button>
-            <button class="tab-btn" onclick="switchTab('pedagogie')">Pédagogie & Concours</button>
+        
+        <div class="btn-group">
+            <button onclick="generateExercise('tolerance_geo')">🎯 Tolérances Géométriques</button>
+            <button onclick="generateExercise('dimensionnel')">📏 Ajustements & Dimensions</button>
+            <button onclick="generateExercise('chaine_cote')">🔗 Chaînes de cotes (GPS)</button>
+            <button class="secondary" onclick="generateExercise('random')">🎲 Exercice Aléatoire</button>
         </div>
 
-        <div id="sciences" class="tab-content active">
-
-            <div class="fiche">
-                <div class="fiche-header">Statique du solide</div>
-                <div class="fiche-body">
-                    <div class="fiche-content">
-                        <h3>Principe Fondamental de la Statique (PFS)</h3>
-                        <p>Un solide S est en équilibre dans un référentiel galiléen si le torseur des actions mécaniques extérieures est nul :</p>
-                        <ul>
-                            <li><span class="important">Théorème de la résultante :</span> <span class="formula">ΣF_ext = 0</span></li>
-                            <li><span class="important">Théorème du moment :</span> <span class="formula">ΣM(A, F_ext) = 0</span> (en tout point A)</li>
-                        </ul>
-
-                        <h3>Méthode de résolution</h3>
-                        <ul>
-                            <li><span class="important">Isoler</span> le solide ou l'ensemble de solides.</li>
-                            <li>Faire le <span class="important">Bilan des actions mécaniques extérieures (BAME)</span> : pesanteur, actions de contact, liaisons.</li>
-                            <li><span class="important">Modéliser</span> chaque action par son torseur en un point judicieux.</li>
-                            <li><span class="important">Appliquer</span> le PFS et projeter sur les axes de coordonnées.</li>
-                            <li><span class="important">Résoudre</span> et vérifier l'isostatisme (inconnues = équations).</li>
-                        </ul>
-
-                        <h3>Inconnues statiques des liaisons usuelles</h3>
-                        <table>
-                            <thead>
-                                <tr><th>Liaison</th><th>Inconnues statiques</th></tr>
-                            </thead>
-                            <tbody>
-                                <tr><td>Ponctuelle</td><td>1 (Normale N)</td></tr>
-                                <tr><td>Linéaire rectiligne / annulaire</td><td>2</td></tr>
-                                <tr><td>Rotule</td><td>3</td></tr>
-                                <tr><td>Pivot glissant</td><td>4</td></tr>
-                                <tr><td>Pivot / Glissière</td><td>5</td></tr>
-                                <tr><td>Encastrement</td><td>6</td></tr>
-                            </tbody>
-                        </table>
-
-                        <div class="piege-box">
-                            <span class="important" style="color:#c2410c;">⚠️ Pièges classiques au concours :</span>
-                            <p>Oublier le poids propre s'il n'est pas explicitement négligé ; mal orienter les actions de contact avec frottement ; choisir un mauvais point d'application pour le théorème du moment (choisir le point éliminant le plus d'inconnues).</p>
-                        </div>
-                    </div>
-                </div>
+        <div class="card" id="exercise-card" style="display:none;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                <span class="badge" id="ex-type">Type</span>
+                <span style="font-size: 0.9rem; color: #64748b;" id="ex-id">ID: #000</span>
             </div>
 
-            <div class="fiche">
-                <div class="fiche-header">Cinématique du solide</div>
-                <div class="fiche-body">
-                    <div class="fiche-content">
-                        <h3>Torseur cinématique & Varignon</h3>
-                        <p>Le champ des vitesses est défini par le vecteur taux de rotation Ω et la vitesse au point A. Formule de changement de point (Varignon) :</p>
-                        <div class="formula">V(B ∈ S/R) = V(A ∈ S/R) + BA ∧ Ω(S/R)</div>
+            <div class="question-text" id="ex-question">Question ?</div>
 
-                        <h3>Composition des mouvements</h3>
-                        <ul>
-                            <li><span class="important">Vitesses :</span> <span class="formula">V(M ∈ 2/0) = V(M ∈ 2/1) + V(M ∈ 1/0)</span></li>
-                            <li><span class="important">Rotations :</span> <span class="formula">Ω(2/0) = Ω(2/1) + Ω(1/0)</span></li>
-                            <li><span class="important">Accélérations :</span> Attention au terme de Coriolis <span class="formula">2 · Ω(1/0) ∧ V(M ∈ 2/1)</span></li>
-                        </ul>
-
-                        <h3>Cas particuliers</h3>
-                        <ul>
-                            <li><span class="important">Mouvement plan sur plan :</span> Utilisation du CIR (Centre Instantané de Rotation), point où la vitesse est nulle.</li>
-                            <li><span class="important">Roulement sans glissement (RSG) :</span> Au point de contact I entre deux solides, la vitesse de glissement est nulle : <span class="formula">V(I ∈ 2/1) = 0</span>.</li>
-                            <li><span class="important">Train épicycloïdal :</span> Utilisation incontournable de la <span class="important">formule de Willis</span>.</li>
-                        </ul>
-                    </div>
+            <div class="drawing-box" id="ex-drawing">
                 </div>
-            </div>
 
-            <div class="fiche">
-                <div class="fiche-header">Dynamique et énergétique</div>
-                <div class="fiche-body">
-                    <div class="fiche-content">
-                        <h3>Principe Fondamental de la Dynamique (PFD)</h3>
-                        <ul>
-                            <li><span class="important">Théorème de la résultante dynamique :</span> <span class="formula">m · a(G) = ΣF_ext</span></li>
-                            <li><span class="important">Théorème du moment dynamique en G :</span> <span class="formula">δ(G) = ΣM(G)</span></li>
-                            <li><span class="important">Rotation autour d'un axe fixe Δ :</span> <span class="formula">J_Δ · θ̈ = ΣM_Δ</span></li>
-                        </ul>
-
-                        <h3>Théorème de l'Énergie Cinétique (TEC)</h3>
-                        <div class="formula">dEc/dt = P(F_ext→S/Rg) + P(inter-efforts)</div>
-                        <p>Pour un système à liaisons parfaites, la puissance des inter-efforts est nulle.</p>
-
-                        <h3>Moments d'inertie & Huygens</h3>
-                        <ul>
-                            <li>Cylindre plein : <span class="formula">J = ½mR²</span> | Tige (médian) : <span class="formula">J = mL²/12</span></li>
-                            <li><span class="important">Théorème de Huygens :</span> <span class="formula">J_Δ = J_ΔG + m · d²</span></li>
-                        </ul>
-                    </div>
+            <form id="answer-form">
+                <ul class="options-list" id="ex-options">
+                    </ul>
+                <div class="btn-group">
+                    <button type="button" onclick="checkAnswer()">Valider la réponse</button>
+                    <button type="button" class="secondary" onclick="nextExercise()">Exercice Suivant ➡️</button>
                 </div>
+            </form>
+
+            <div id="feedback-box" class="feedback">
+                <span id="feedback-status">Statut</span>
+                <div class="explanation" id="feedback-explanation">Explication</div>
             </div>
-
-            <div class="fiche">
-                <div class="fiche-header">Résistance des matériaux (RDM)</div>
-                <div class="fiche-body">
-                    <div class="fiche-content">
-                        <h3>Hypothèses fondamentales</h3>
-                        <p>Matériau homogène, isotrope, élastique linéaire (Loi de Hooke : <span class="formula">σ = E·&epsilon;</span>). Sections droites restent planes (Navier-Bernoulli).</p>
-                        
-                        <h3>Sollicitations simples</h3>
-                        <table>
-                            <thead>
-                                <tr><th>Sollicitation</th><th>Contrainte</th><th>Déformation / Flèche</th></tr>
-                            </thead>
-                            <tbody>
-                                <tr><td>Traction</td><td>σ = N / S</td><td>ΔL = N·L / (E·S)</td></tr>
-                                <tr><td>Torsion</td><td>τ = M_t · r / I_G</td><td>θ = M_t · L / (G · I_G)</td></tr>
-                                <tr><td>Flexion</td><td>σ = M_f · y / I_Gz</td><td>f_max = F·L³ / (48·E·I) (Poutre 2 appuis centrée)</td></tr>
-                            </tbody>
-                        </table>
-                        
-                        <h3>Condition de résistance</h3>
-                        <div class="formula">σ_max ≤ R_pe = R_e / s</div> (avec s = coefficient de sécurité).
-                    </div>
-                </div>
-            </div>
-
-            <div class="fiche">
-                <div class="fiche-header">Liaisons et schéma cinématique</div>
-                <div class="fiche-body">
-                    <div class="fiche-content">
-                        <h3>Analyse des mécanismes</h3>
-                        <ul>
-                            <li><span class="important">Classes d'équivalence :</span> Regroupement des pièces sans mouvement relatif.</li>
-                            <li><span class="important">Graphe des liaisons :</span> Noeuds = classes, Arcs = liaisons normalisées.</li>
-                        </ul>
-
-                        <h3>Mobilité et Hyperstatisme</h3>
-                        <ul>
-                            <li><span class="important">Degré d'hyperstatisme (3D) :</span> <span class="formula">h = m + 6·(n−1) − Nc</span> (où n est le nombre de classes et Nc le nombre de ddl).</li>
-                            <li><span class="important">h = 0 (Isostatique) :</span> Montage facile, coût réduit.</li>
-                            <li><span class="important">h > 0 (Hyperstatique) :</span> Rigidité accrue mais exige des tolérances géométriques très serrées.</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-            <div class="fiche">
-                <div class="fiche-header">Transmission de puissance & Automatique</div>
-                <div class="fiche-body">
-                    <div class="fiche-content">
-                        <h3>Engrenages & Willis</h3>
-                        <ul>
-                            <li><span class="important">Diamètre primitif :</span> <span class="formula">d = m · Z</span> (m : module commun obligatoire).</li>
-                            <li><span class="important">Formule de Willis (Trains Épicycloïdaux) :</span> <span class="formula">(ω_planétaire1 − ω_ps) / (ω_planétaire2 − ω_ps) = ±λ</span></li>
-                        </ul>
-
-                        <h3>Systèmes Asservis (SLCI)</h3>
-                        <ul>
-                            <li><span class="important">Stabilité :</span> Marges sur le diagramme de Bode de la FTBO (Marge de phase > 45°, Marge de gain > 10 dB).</li>
-                            <li><span class="important">Correcteur PI :</span> Annule l'erreur statique mais peut dégrader la stabilité.</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
         </div>
 
-        <div id="pedagogie" class="tab-content">
-            
-            <div class="fiche">
-                <div class="fiche-header">Analyse Fonctionnelle & SysML</div>
-                <div class="fiche-body">
-                    <div class="fiche-content">
-                        <h3>Analyse du besoin</h3>
-                        <p>Bête à cornes (À qui rend service ? Sur quoi agit-il ?), Diagramme Pieuvre (Fonctions principales FP et contraintes FC).</p>
-                        
-                        <h3>Diagrammes SysML clés</h3>
-                        <ul>
-                            <li><span class="important">req (Exigences) :</span> Liste et structure les exigences du cahier des charges.</li>
-                            <li><span class="important">uc (Cas d'utilisation) :</span> Définit les limites du système et les acteurs.</li>
-                            <li><span class="important">bdd (Définition de blocs) / ibd (Bloc interne) :</span> Architecture structurelle et flux (Matière, Énergie, Information).</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-            <div class="fiche">
-                <div class="fiche-header">Structure du Concours CAPET / CAFEP</div>
-                <div class="fiche-body">
-                    <div class="fiche-content">
-                        <h3>Épreuves d'Admissibilité (Écrits)</h3>
-                        <ul>
-                            <li><span class="important">Analyse et modélisation d'un système (5h, coef 2) :</span> Mécanique, automatique, énergétique.</li>
-                            <li><span class="important">Mise en situation professionnelle (5h, coef 2) :</span> Exploitation pédagogique et construction de séquence.</li>
-                        </ul>
-                        <h3>Épreuves d'Admission (Oraux)</h3>
-                        <ul>
-                            <li><span class="important">Soutenance d'un TP (4h de préparation, 1h d'exposé/entretien) :</span> Manipulation réelle et transposition didactique.</li>
-                            <li><span class="important">Dossier Industriel & Entretien de Recrutement :</span> Évaluation des compétences techniques et valeurs de la République.</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-            <div class="fiche">
-                <div class="fiche-header">Ingénierie Pédagogique (Séquences & Textes Officiels)</div>
-                <div class="fiche-body">
-                    <div class="fiche-content">
-                        <h3>Programmes à maîtriser</h3>
-                        <p>Collège (Cycle 4, Technologie), Lycée (Spécialité SI en voie générale, et Bac STI2D avec l'enseignement spécifique ITEC).</p>
-                        
-                        <h3>Conception d'une Séquence</h3>
-                        <p>Une séquence (2 à 4 semaines) regroupe des séances visant des compétences ciblées. Elle doit inclure :</p>
-                        <ul>
-                            <li>Une situation déclenchante / problématique motivante.</li>
-                            <li>Des activités élèves s'appuyant sur les démarches de l'ingénieur (Démarche d'investigation, démarche de projet, résolution de problème technique).</li>
-                            <li>Des évaluations définies (Diagnostique, formative, sommative) via des grilles critériées par compétences.</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
+        <div class="card" id="welcome-card" style="text-align: center; padding: 40px 20px;">
+            <h2 style="margin-bottom: 10px; color: var(--primary);">Prêt pour les révisions ?</h2>
+            <p style="margin-bottom: 20px;">Choisissez une thématique ci-dessus pour générer une question de lecture de plan technique respectant les normes ISO-GPS en vigueur.</p>
         </div>
+
     </div>
 
     <script>
-        // Gestion des Onglets (Sciences vs Pédagogie)
-        function switchTab(tabId) {
-            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
-            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-            
-            document.getElementById(tabId).classList.add('active');
-            event.currentTarget.classList.add('active');
+        // Banque de modèles de données dynamiques pour le générateur
+        const database = {
+            tolerance_geo: [
+                {
+                    question: "Que signifie la spécification géométrique représentée dans le cadre de tolérance ci-dessous ?",
+                    symbol: "⌖", // Localisation
+                    val: "0.05",
+                    ref: "A-B",
+                    options: [
+                        "L'axe de l'alésage doit être situé à l'intérieur d'une zone de tolérance cylindrique de diamètre 0,05 mm, centrée par rapport aux références spécifiées A et B.",
+                        "Le parallélisme de la surface par rapport à l'axe A-B doit être inférieur à 0,05 mm.",
+                        "La tolérance de position indique que la pièce doit mesurer exactement 0,05 mm de plus que la référence A.",
+                        "L'écart de circularité admis sur l'axe commun A-B est fixé à un rayon de 0,05 mm."
+                    ],
+                    correct: 0,
+                    exp: "Le symbole ⌖ désigne la 'Localisation'. Le cadre définit une zone cylindrique de tolérance (ø 0.05) dans laquelle doit se situer l'axe de l'élément extrait par rapport au système de référence."
+                },
+                {
+                    question: "Analysez la tolérance géométrique de battement ci-dessous. Quelle affirmation est correcte ?",
+                    symbol: "↗", // Battement simple
+                    val: "0.1",
+                    ref: "D",
+                    options: [
+                        "Le battement total radial de la surface ne doit pas dépasser 0,1 mm par rapport à l'axe de référence D.",
+                        "Le battement simple axial ou radial mesuré lors d'une rotation complète autour de l'axe de référence D ne doit pas excéder 0,1 mm.",
+                        "L'inclinaison de la face par rapport à D est tolérée à ± 0,1°.",
+                        "La concentricité de la pièce par rapport à la référence D est de 0,1 mm au maximum."
+                    ],
+                    correct: 1,
+                    exp: "Le symbole à une seule flèche ↗ représente le Battement Simple. Contrairement au battement total (double flèche), le contrôle se fait le long d'une ligne circulaire de mesure à chaque position axiale lors d'une rotation."
+                },
+                {
+                    question: "Le symbole ⟂ est présent sur un plan d'un carter. Quelle est sa signification exacte ?",
+                    symbol: "⟂", // Perpendicularité
+                    val: "0.02",
+                    ref: "A",
+                    options: [
+                        "La face tolérée doit être perpendiculaire à la référence A à ± 0,02 degrés.",
+                        "La zone de tolérance est limitée par deux plans parallèles distants de 0,02 mm et perpendiculaires à l'axe ou plan de référence A.",
+                        "Le défaut de rectitude de l'arête ne doit pas dépasser 0,02 mm.",
+                        "La surface doit avoir un état de rugosité Ra inférieur à 0,02 µm par rapport à A."
+                    ],
+                    correct: 1,
+                    exp: "En ISO-GPS, les tolérances géométriques s'expriment toujours en millimètres (épaisseur de la zone de tolérance de forme, d'orientation ou de position) et non pas en angles (degrés)."
+                }
+            ],
+            dimensionnel: [
+                {
+                    question: "Soit un ajustement glissant sur un arbre moteur défini par la cote nominale et sa tolérance : 28 H7/g6. Que peut-on affirmer ?",
+                    customHTML: "<div style='font-size:2rem; font-weight:bold;'>ø 28 H7/g6</div>",
+                    options: [
+                        "Il s'agit d'un ajustement avec serrage certain car l'arbre est plus gros que l'alésage.",
+                        "C'est un ajustement incertain (parfois glissant, parfois serré).",
+                        "Il s'agit d'un ajustement avec jeu certain (H7 donne un intervalle toujours au-dessus de la ligne zéro, et g6 est toujours en dessous).",
+                        "L'alésage possède une dimension maximale inférieure à l'arbre."
+                    ],
+                    correct: 2,
+                    exp: "La lettre majuscule 'H' indique un alésage dont l'écart inférieur est nul (ligne zéro). La lettre minuscule 'g' indique un arbre dont l'écart supérieur est négatif (sous la ligne zéro). L'alésage est donc toujours plus grand que l'arbre : le jeu est garanti."
+                },
+                {
+                    question: "Une cote est spécifiée 45 ±0.2. Si on applique le principe d'indépendance (norme ISO 8015 par défaut), quelle affirmation est vraie ?",
+                    customHTML: "<div style='font-size:2rem; font-weight:bold;'>45 ±0.2</div>",
+                    options: [
+                        "Les défauts géométriques (ex: circularité) sont limités d'office par l'enveloppe de la taille maximale (ex-exigence de l'enveloppe).",
+                        "Les tolérances dimensionnelles et géométriques doivent être traitées de manière totalement indépendante sauf indication contraire (comme le modificateur Ⓔ).",
+                        "La pièce est obligatoirement conforme si toutes les mesures locales font pile 45,00 mm même si la pièce est courbée.",
+                        "Le diamètre maximal ne peut jamais dépasser 45,0 mm en aucun point."
+                    ],
+                    correct: 1,
+                    exp: "La norme ISO 8015 pose le principe fondamental d'indépendance. Une tolérance dimensionnelle linéaire ne limite pas les défauts géométriques de la même surface. Pour lier les deux, il faut rajouter l'exigence de l'enveloppe Ⓔ."
+                }
+            ],
+            chaine_cote: [
+                {
+                    question: "On réalise une chaîne de cotes simplifiée pour garantir un jeu fonctionnel J. L'équation de fermeture donne : J = A_alésage - B_arbre. Si A = 50 +0.1 / 0 et B = 50 -0.02 / -0.05. Calculez le jeu maximal (J_max).",
+                    customHTML: "<div style='text-align:left; background:#fff; padding:10px; border:1px solid #ccc;'><p><b>A (Alésage)</b> : Max = 50.10 mm, Min = 50.00 mm</p><p><b>B (Arbre)</b> : Max = 49.98 mm, Min = 49.95 mm</p></div>",
+                    options: [
+                        "J_max = 0,15 mm",
+                        "J_max = 0,12 mm",
+                        "J_max = 0,05 mm",
+                        "J_max = 0,20 mm"
+                    ],
+                    correct: 0,
+                    exp: "Le jeu maximal est obtenu lorsque l'alésage contenant est au maximum de sa matière tolérée (ici le plus grand contenant : A_max = 50,10) et l'arbre contenu au minimum de sa matière (le plus petit contenu : B_min = 49,95). J_max = 50,10 - 49,95 = 0,15 mm."
+                }
+            ]
+        };
+
+        let currentExercise = null;
+        let currentType = '';
+
+        function generateExercise(type) {
+            document.getElementById('welcome-card').style.display = 'none';
+            document.getElementById('exercise-card').style.display = 'block';
+            document.getElementById('feedback-box').style.display = 'none';
+
+            // Reset du formulaire
+            document.getElementById('answer-form').reset();
+
+            if (type === 'random') {
+                const types = ['tolerance_geo', 'dimensionnel', 'chaine_cote'];
+                currentType = types[Math.floor(Math.random() * types.length)];
+            } else {
+                currentType = type;
+            }
+
+            const pool = database[currentType];
+            const randomIndex = Math.floor(Math.random() * pool.length);
+            currentExercise = pool[randomIndex];
+
+            // Remplissage de l'interface
+            document.getElementById('ex-type').innerText = currentType.replace('_', ' ');
+            document.getElementById('ex-id').innerText = "ID: #" + Math.floor(Math.random() * 900 + 100);
+            document.getElementById('ex-question').innerText = currentExercise.question;
+
+            // Rendu visuel (Dessin / Cadre GPS)
+            const drawingBox = document.getElementById('ex-drawing');
+            drawingBox.innerHTML = '';
+
+            if (currentExercise.symbol) {
+                // Modèle de cadre GPS standardisé HTML
+                let html = `<div class="gps-frame">`;
+                if(currentExercise.symbol === "⌖") html += `<div class="gps-cell" style="font-size:1.8rem; padding:0 12px;">ø</div>`;
+                html += `<div class="gps-cell">${currentExercise.symbol}</div>`;
+                html += `<div class="gps-cell">${currentExercise.val}</div>`;
+                if(currentExercise.ref) html += `<div class="gps-cell">${currentExercise.ref}</div>`;
+                html += `</div>`;
+                drawingBox.innerHTML = html;
+            } else if (currentExercise.customHTML) {
+                drawingBox.innerHTML = currentExercise.customHTML;
+            }
+
+            // Options radio boutons
+            const optionsList = document.getElementById('ex-options');
+            optionsList.innerHTML = '';
+            currentExercise.options.forEach((opt, idx) => {
+                const li = document.createElement('li');
+                li.className = 'option-item';
+                li.innerHTML = `<label style="display:flex; width:100%; cursor:pointer;"><input type="radio" name="gps_opt" value="${idx}"> <span style="margin-left:10px;">${opt}</span></label>`;
+                optionsList.appendChild(li);
+            });
         }
 
-        // Gestion de l'ouverture des Fiches en Accordéon
-        document.querySelectorAll('.fiche-header').forEach(header => {
-            header.addEventListener('click', () => {
-                const parent = header.parentElement;
-                const body = parent.querySelector('.fiche-body');
-                
-                if (parent.classList.contains('open')) {
-                    parent.classList.remove('open');
-                    body.style.maxHeight = "0";
-                } else {
-                    // Fermer les autres fiches ouvertes dans le même onglet (optionnel)
-                    // document.querySelectorAll('.fiche').forEach(f => { f.classList.remove('open'); f.querySelector('.fiche-body').style.maxHeight = "0"; });
-                    
-                    parent.classList.add('open');
-                    body.style.maxHeight = body.scrollHeight + "px";
-                }
-            });
-        });
+        function checkAnswer() {
+            if (!currentExercise) return;
+            
+            const selectedOpt = document.querySelector('input[name="gps_opt"]:checked');
+            if (!selectedOpt) {
+                alert("Veuillez sélectionner une réponse avant de valider.");
+                return;
+            }
+
+            const userAnswer = parseInt(selectedOpt.value);
+            const feedbackBox = document.getElementById('feedback-box');
+            const status = document.getElementById('feedback-status');
+            const exp = document.getElementById('feedback-explanation');
+
+            if (userAnswer === currentExercise.correct) {
+                feedbackBox.className = "feedback correct";
+                status.innerHTML = "🎉 <b>Correct !</b> Bien analysé.";
+            } else {
+                feedbackBox.className = "feedback wrong";
+                status.innerHTML = "❌ <b>Erreur de lecture.</b>";
+            }
+            
+            exp.innerHTML = currentExercise.exp;
+        }
+
+        function nextExercise() {
+            generateExercise(currentType || 'random');
+        }
     </script>
 </body>
 </html>
