@@ -3,424 +3,250 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Générateur d'Exercices : Spécification ISO-GPS</title>
+    <title>Générateur d'Exercices Mécaniques V3 (Schémas Corrigés)</title>
     <style>
-        :root {
-            --primary: #0f172a;
-            --primary-light: #1e293b;
-            --accent: #0284c7;
-            --accent-hover: #0369a1;
-            --success: #16a34a;
-            --error: #dc2626;
-            --bg-site: #f8fafc;
-            --bg-card: #ffffff;
-            --text-main: #334155;
-            --border: #cbd5e1;
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
-        body {
-            background-color: var(--bg-site);
-            color: var(--text-main);
-            padding-bottom: 50px;
-        }
-
-        header {
-            background: linear-gradient(135deg, var(--primary), var(--primary-light));
-            color: white;
-            padding: 30px 20px;
-            text-align: center;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-        }
-
-        header h1 {
-            font-size: 1.8rem;
-            margin-bottom: 5px;
-        }
-
-        .container {
-            max-width: 850px;
-            margin: 30px auto;
-            padding: 0 20px;
-        }
-
-        .card {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 25px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-            margin-bottom: 25px;
-        }
-
-        .btn-group {
-            display: flex;
-            gap: 15px;
-            margin-bottom: 20px;
-            flex-wrap: wrap;
-        }
-
-        button {
-            background-color: var(--accent);
-            color: white;
-            border: none;
-            padding: 12px 20px;
-            font-size: 1rem;
-            font-weight: 600;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-
-        button:hover {
-            background-color: var(--accent-hover);
-        }
-
-        button.secondary {
-            background-color: #64748b;
-        }
-        button.secondary:hover {
-            background-color: #475569;
-        }
-
-        /* Cadre de simulation de dessin technique */
-        .drawing-box {
-            background: #f1f5f9;
-            border: 2px dashed #94a3b8;
-            border-radius: 6px;
-            padding: 20px;
-            margin: 20px 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 180px;
-        }
-
-        /* Style des cadres de tolérance GPS */
-        .gps-frame {
-            display: inline-flex;
-            border: 2px solid #000;
-            font-family: monospace;
-            font-size: 1.4rem;
-            font-weight: bold;
-            background: white;
-            color: black;
-        }
-
-        .gps-cell {
-            padding: 4px 10px;
-            border-right: 2px solid #000;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .gps-cell:last-child {
-            border-right: none;
-        }
-
-        .question-text {
-            font-size: 1.1rem;
-            font-weight: 600;
-            margin-bottom: 15px;
-            color: var(--primary);
-        }
-
-        /* Choix multiples */
-        .options-list {
-            list-style: none;
-            margin-bottom: 20px;
-        }
-
-        .option-item {
-            background: #fff;
-            border: 1px solid var(--border);
-            padding: 12px 15px;
-            border-radius: 6px;
-            margin-bottom: 10px;
-            cursor: pointer;
-            transition: all 0.2s;
-            display: flex;
-            align-items: center;
-        }
-
-        .option-item:hover {
-            background: #f8fafc;
-            border-color: #94a3b8;
-        }
-
-        .option-item input {
-            margin-right: 12px;
-            transform: scale(1.2);
-        }
-
-        /* Correction */
-        .feedback {
-            padding: 15px;
-            border-radius: 6px;
-            margin-top: 15px;
-            display: none;
-            font-weight: 500;
-        }
-
-        .feedback.correct {
-            display: block;
-            background-color: #dcfce7;
-            border-left: 5px solid var(--success);
-            color: #15803d;
-        }
-
-        .feedback.wrong {
-            display: block;
-            background-color: #fee2e2;
-            border-left: 5px solid var(--error);
-            color: #b91c1c;
-        }
-
-        .explanation {
-            margin-top: 8px;
-            font-size: 0.95rem;
-            color: #475569;
-            font-weight: normal;
-        }
-
-        .badge {
-            background: #e2e8f0;
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 0.85rem;
-            font-weight: bold;
-            text-transform: uppercase;
-        }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #eef2f3; color: #2c3e50; line-height: 1.6; padding: 20px; }
+        .container { max-width: 850px; margin: auto; background: #fff; padding: 25px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        h1 { color: #2980b9; text-align: center; border-bottom: 2px solid #3498db; padding-bottom: 10px; }
+        .controls { display: flex; gap: 15px; justify-content: center; margin-bottom: 25px; flex-wrap: wrap; }
+        select, button { padding: 12px 20px; border: 1px solid #bdc3c7; border-radius: 6px; font-size: 16px; font-weight: bold; }
+        select { background-color: #f9f9f9; cursor: pointer; }
+        button { background-color: #3498db; color: white; border: none; cursor: pointer; transition: 0.3s; box-shadow: 0 3px 6px rgba(0,0,0,0.1); }
+        button:hover { background-color: #2980b9; transform: translateY(-2px); }
+        .btn-solution { background-color: #27ae60; margin-top: 15px; display: none; }
+        .btn-solution:hover { background-color: #219a52; }
+        .box { background: #fdfdfd; padding: 20px; border-radius: 8px; border: 1px solid #ecf0f1; margin-top: 20px; display: none; }
+        .box h3 { margin-top: 0; color: #2c3e50; display: flex; align-items: center; gap: 10px; }
+        .schema-container { text-align: center; margin: 20px 0; background: #fff; border: 1px dashed #bdc3c7; border-radius: 5px; padding: 10px; }
+        .schema-solution { border-color: #2ecc71; background-color: #f9fffb; }
+        .math { font-family: 'Courier New', Courier, monospace; font-weight: bold; background: #f1f2f6; padding: 3px 6px; border-radius: 4px; border: 1px solid #dfe4ea;}
+        .solution-box { background-color: #f0fdf4; border-left: 6px solid #2ecc71; }
     </style>
 </head>
 <body>
 
-    <header>
-        <h1>Générateur d'Exercices ISO-GPS</h1>
-        <p>Entraînement au décodage de plans et à la cotation fonctionnelle (CAPET / BTS / IUT)</p>
-    </header>
-
-    <div class="container">
-        
-        <div class="btn-group">
-            <button onclick="generateExercise('tolerance_geo')">🎯 Tolérances Géométriques</button>
-            <button onclick="generateExercise('dimensionnel')">📏 Ajustements & Dimensions</button>
-            <button onclick="generateExercise('chaine_cote')">🔗 Chaînes de cotes (GPS)</button>
-            <button class="secondary" onclick="generateExercise('random')">🎲 Exercice Aléatoire</button>
-        </div>
-
-        <div class="card" id="exercise-card" style="display:none;">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
-                <span class="badge" id="ex-type">Type</span>
-                <span style="font-size: 0.9rem; color: #64748b;" id="ex-id">ID: #000</span>
-            </div>
-
-            <div class="question-text" id="ex-question">Question ?</div>
-
-            <div class="drawing-box" id="ex-drawing">
-                </div>
-
-            <form id="answer-form">
-                <ul class="options-list" id="ex-options">
-                    </ul>
-                <div class="btn-group">
-                    <button type="button" onclick="checkAnswer()">Valider la réponse</button>
-                    <button type="button" class="secondary" onclick="nextExercise()">Exercice Suivant ➡️</button>
-                </div>
-            </form>
-
-            <div id="feedback-box" class="feedback">
-                <span id="feedback-status">Statut</span>
-                <div class="explanation" id="feedback-explanation">Explication</div>
-            </div>
-        </div>
-
-        <div class="card" id="welcome-card" style="text-align: center; padding: 40px 20px;">
-            <h2 style="margin-bottom: 10px; color: var(--primary);">Prêt pour les révisions ?</h2>
-            <p style="margin-bottom: 20px;">Choisissez une thématique ci-dessus pour générer une question de lecture de plan technique respectant les normes ISO-GPS en vigueur.</p>
-        </div>
-
+<div class="container">
+    <h1>📐 Générateur d'Exercices V3</h1>
+    
+    <div class="controls">
+        <select id="category">
+            <option value="gps">Normes GPS (Tolérancement)</option>
+            <option value="cotation">Chaîne de cotes (Jeu)</option>
+            <option value="ajustement">Ajustements (Arbre/Alésage)</option>
+        </select>
+        <button onclick="genererExercice()">Générer un exercice</button>
     </div>
 
-    <script>
-        // Banque de modèles de données dynamiques pour le générateur
-        const database = {
-            tolerance_geo: [
-                {
-                    question: "Que signifie la spécification géométrique représentée dans le cadre de tolérance ci-dessous ?",
-                    symbol: "⌖", // Localisation
-                    val: "0.05",
-                    ref: "A-B",
-                    options: [
-                        "L'axe de l'alésage doit être situé à l'intérieur d'une zone de tolérance cylindrique de diamètre 0,05 mm, centrée par rapport aux références spécifiées A et B.",
-                        "Le parallélisme de la surface par rapport à l'axe A-B doit être inférieur à 0,05 mm.",
-                        "La tolérance de position indique que la pièce doit mesurer exactement 0,05 mm de plus que la référence A.",
-                        "L'écart de circularité admis sur l'axe commun A-B est fixé à un rayon de 0,05 mm."
-                    ],
-                    correct: 0,
-                    exp: "Le symbole ⌖ désigne la 'Localisation'. Le cadre définit une zone cylindrique de tolérance (ø 0.05) dans laquelle doit se situer l'axe de l'élément extrait par rapport au système de référence."
+    <div id="enonceBox" class="box">
+        <h3>📝 Énoncé</h3>
+        <div id="schemaBox" class="schema-container"></div>
+        <p id="enonceText"></p>
+        <button id="btnSolution" class="btn-solution" onclick="afficherSolution()">Voir le corrigé</button>
+    </div>
+
+    <div id="solutionBox" class="box solution-box">
+        <h3>✅ Corrigé Détaillé</h3>
+        <p id="solutionText"></p>
+    </div>
+</div>
+
+<script>
+    let solutionActuelle = "";
+
+    const svgDefs = `
+        <defs>
+            <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                <path d="M0,0 L0,6 L9,3 z" fill="#2c3e50" />
+            </marker>
+            <marker id="arrowRed" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                <path d="M0,0 L0,6 L9,3 z" fill="#e74c3c" />
+            </marker>
+        </defs>`;
+
+    function genererExercice() {
+        const categorie = document.getElementById("category").value;
+        let enonce = "";
+        let svg = "";
+        
+        document.getElementById("enonceBox").style.display = "block";
+        document.getElementById("btnSolution").style.display = "inline-block";
+        document.getElementById("solutionBox").style.display = "none";
+
+        if (categorie === "gps") {
+            const gpsData = [
+                { 
+                    symbole: "⟂", nom: "Perpendicularité", tol: "0.05", ref: "A", 
+                    desc: "La surface indiquée doit être comprise entre deux plans parallèles distants de 0.05 mm et rigoureusement perpendiculaires au plan de référence A.",
+                    svgCorrig: `<svg viewBox="0 0 350 180" width="100%" height="180">
+                        <line x1="50" y1="150" x2="300" y2="150" stroke="#e74c3c" stroke-width="4"/>
+                        <text x="310" y="155" font-family="Arial" font-size="14" font-weight="bold" fill="#e74c3c">Réf. A</text>
+                        <polyline points="175,150 185,150 185,140" fill="none" stroke="#000" stroke-width="1.5"/>
+                        
+                        <rect x="155" y="20" width="40" height="130" fill="rgba(46, 204, 113, 0.2)" stroke="#27ae60" stroke-width="2" stroke-dasharray="4"/>
+                        <line x1="155" y1="10" x2="195" y2="10" stroke="#000" marker-start="url(#arrow)" marker-end="url(#arrow)"/>
+                        <text x="145" y="30" font-family="Arial" font-size="12" font-weight="bold" fill="#27ae60">Zone: 0.05</text>
+                        
+                        <path d="M 160,150 Q 175,80 185,20" fill="none" stroke="#2c3e50" stroke-width="2.5"/>
+                        <text x="195" y="80" font-family="Arial" font-size="12" fill="#2c3e50">← Pièce réelle (dans la zone)</text>
+                    </svg>`
                 },
-                {
-                    question: "Analysez la tolérance géométrique de battement ci-dessous. Quelle affirmation est correcte ?",
-                    symbol: "↗", // Battement simple
-                    val: "0.1",
-                    ref: "D",
-                    options: [
-                        "Le battement total radial de la surface ne doit pas dépasser 0,1 mm par rapport à l'axe de référence D.",
-                        "Le battement simple axial ou radial mesuré lors d'une rotation complète autour de l'axe de référence D ne doit pas excéder 0,1 mm.",
-                        "L'inclinaison de la face par rapport à D est tolérée à ± 0,1°.",
-                        "La concentricité de la pièce par rapport à la référence D est de 0,1 mm au maximum."
-                    ],
-                    correct: 1,
-                    exp: "Le symbole à une seule flèche ↗ représente le Battement Simple. Contrairement au battement total (double flèche), le contrôle se fait le long d'une ligne circulaire de mesure à chaque position axiale lors d'une rotation."
+                { 
+                    symbole: "∥", nom: "Parallélisme", tol: "0.02", ref: "B", 
+                    desc: "La surface indiquée doit être comprise entre deux plans parallèles distants de 0.02 mm et rigoureusement parallèles au plan de référence B.",
+                    svgCorrig: `<svg viewBox="0 0 350 180" width="100%" height="180">
+                        <line x1="50" y1="140" x2="300" y2="140" stroke="#e74c3c" stroke-width="4"/>
+                        <text x="310" y="145" font-family="Arial" font-size="14" font-weight="bold" fill="#e74c3c">Réf. B</text>
+                        
+                        <rect x="50" y="60" width="250" height="30" fill="rgba(46, 204, 113, 0.2)" stroke="#27ae60" stroke-width="2" stroke-dasharray="4"/>
+                        <line x1="30" y1="60" x2="30" y2="90" stroke="#000" marker-start="url(#arrow)" marker-end="url(#arrow)"/>
+                        <text x="35" y="79" font-family="Arial" font-size="12" font-weight="bold" fill="#27ae60">Zone: 0.02</text>
+                        
+                        <path d="M 50,70 Q 150,90 300,65" fill="none" stroke="#2c3e50" stroke-width="2.5"/>
+                        <text x="150" y="50" font-family="Arial" font-size="12" fill="#2c3e50">Pièce réelle (Ondulations comprises dans la zone)</text>
+                    </svg>`
                 },
-                {
-                    question: "Le symbole ⟂ est présent sur un plan d'un carter. Quelle est sa signification exacte ?",
-                    symbol: "⟂", // Perpendicularité
-                    val: "0.02",
-                    ref: "A",
-                    options: [
-                        "La face tolérée doit être perpendiculaire à la référence A à ± 0,02 degrés.",
-                        "La zone de tolérance est limitée par deux plans parallèles distants de 0,02 mm et perpendiculaires à l'axe ou plan de référence A.",
-                        "Le défaut de rectitude de l'arête ne doit pas dépasser 0,02 mm.",
-                        "La surface doit avoir un état de rugosité Ra inférieur à 0,02 µm par rapport à A."
-                    ],
-                    correct: 1,
-                    exp: "En ISO-GPS, les tolérances géométriques s'expriment toujours en millimètres (épaisseur de la zone de tolérance de forme, d'orientation ou de position) et non pas en angles (degrés)."
+                { 
+                    symbole: "⌖", nom: "Localisation", tol: "Ø 0.1", ref: "A, B", 
+                    desc: "L'axe du perçage doit être compris dans une zone cylindrique de diamètre 0.1 mm. Le centre de cette zone est défini par des cotes théoriques exactes (encadrées) par rapport aux références A et B.",
+                    svgCorrig: `<svg viewBox="0 0 350 180" width="100%" height="180">
+                        <line x1="50" y1="90" x2="300" y2="90" stroke="#34495e" stroke-width="1.5" stroke-dasharray="10,5,2,5"/>
+                        <line x1="175" y1="10" x2="175" y2="170" stroke="#34495e" stroke-width="1.5" stroke-dasharray="10,5,2,5"/>
+                        <text x="50" y="80" font-family="Arial" font-size="12" fill="#34495e">Position théorique exacte (TED)</text>
+                        
+                        <circle cx="175" cy="90" r="40" fill="rgba(46, 204, 113, 0.2)" stroke="#27ae60" stroke-width="2" stroke-dasharray="4"/>
+                        <line x1="175" y1="90" x2="210" y2="70" stroke="#27ae60" stroke-width="1.5"/>
+                        <text x="215" y="65" font-family="Arial" font-size="12" font-weight="bold" fill="#27ae60">Cylindre de tolérance Ø 0.1</text>
+                        
+                        <circle cx="190" cy="100" r="4" fill="#e74c3c"/>
+                        <line x1="190" y1="100" x2="230" y2="130" stroke="#e74c3c" stroke-width="1.5"/>
+                        <text x="235" y="135" font-family="Arial" font-size="12" font-weight="bold" fill="#e74c3c">Axe réel du perçage</text>
+                    </svg>`
                 }
-            ],
-            dimensionnel: [
-                {
-                    question: "Soit un ajustement glissant sur un arbre moteur défini par la cote nominale et sa tolérance : 28 H7/g6. Que peut-on affirmer ?",
-                    customHTML: "<div style='font-size:2rem; font-weight:bold;'>ø 28 H7/g6</div>",
-                    options: [
-                        "Il s'agit d'un ajustement avec serrage certain car l'arbre est plus gros que l'alésage.",
-                        "C'est un ajustement incertain (parfois glissant, parfois serré).",
-                        "Il s'agit d'un ajustement avec jeu certain (H7 donne un intervalle toujours au-dessus de la ligne zéro, et g6 est toujours en dessous).",
-                        "L'alésage possède une dimension maximale inférieure à l'arbre."
-                    ],
-                    correct: 2,
-                    exp: "La lettre majuscule 'H' indique un alésage dont l'écart inférieur est nul (ligne zéro). La lettre minuscule 'g' indique un arbre dont l'écart supérieur est négatif (sous la ligne zéro). L'alésage est donc toujours plus grand que l'arbre : le jeu est garanti."
-                },
-                {
-                    question: "Une cote est spécifiée 45 ±0.2. Si on applique le principe d'indépendance (norme ISO 8015 par défaut), quelle affirmation est vraie ?",
-                    customHTML: "<div style='font-size:2rem; font-weight:bold;'>45 ±0.2</div>",
-                    options: [
-                        "Les défauts géométriques (ex: circularité) sont limités d'office par l'enveloppe de la taille maximale (ex-exigence de l'enveloppe).",
-                        "Les tolérances dimensionnelles et géométriques doivent être traitées de manière totalement indépendante sauf indication contraire (comme le modificateur Ⓔ).",
-                        "La pièce est obligatoirement conforme si toutes les mesures locales font pile 45,00 mm même si la pièce est courbée.",
-                        "Le diamètre maximal ne peut jamais dépasser 45,0 mm en aucun point."
-                    ],
-                    correct: 1,
-                    exp: "La norme ISO 8015 pose le principe fondamental d'indépendance. Une tolérance dimensionnelle linéaire ne limite pas les défauts géométriques de la même surface. Pour lier les deux, il faut rajouter l'exigence de l'enveloppe Ⓔ."
-                }
-            ],
-            chaine_cote: [
-                {
-                    question: "On réalise une chaîne de cotes simplifiée pour garantir un jeu fonctionnel J. L'équation de fermeture donne : J = A_alésage - B_arbre. Si A = 50 +0.1 / 0 et B = 50 -0.02 / -0.05. Calculez le jeu maximal (J_max).",
-                    customHTML: "<div style='text-align:left; background:#fff; padding:10px; border:1px solid #ccc;'><p><b>A (Alésage)</b> : Max = 50.10 mm, Min = 50.00 mm</p><p><b>B (Arbre)</b> : Max = 49.98 mm, Min = 49.95 mm</p></div>",
-                    options: [
-                        "J_max = 0,15 mm",
-                        "J_max = 0,12 mm",
-                        "J_max = 0,05 mm",
-                        "J_max = 0,20 mm"
-                    ],
-                    correct: 0,
-                    exp: "Le jeu maximal est obtenu lorsque l'alésage contenant est au maximum de sa matière tolérée (ici le plus grand contenant : A_max = 50,10) et l'arbre contenu au minimum de sa matière (le plus petit contenu : B_min = 49,95). J_max = 50,10 - 49,95 = 0,15 mm."
-                }
-            ]
-        };
+            ];
+            let choix = gpsData[Math.floor(Math.random() * gpsData.length)];
 
-        let currentExercise = null;
-        let currentType = '';
+            // Énoncé
+            svg = `<svg viewBox="0 0 400 200" width="100%" height="200">
+                ${svgDefs}
+                <path d="M 80,140 L 300,140 L 300,60 L 200,60 L 200,90 L 80,90 Z" fill="#ecf0f1" stroke="#2c3e50" stroke-width="2"/>
+                <line x1="70" y1="140" x2="310" y2="140" stroke="#c0392b" stroke-width="3"/>
+                <line x1="150" y1="140" x2="150" y2="170" stroke="#000" stroke-width="1.5"/>
+                <polygon points="145,140 155,140 150,130" fill="#000"/>
+                <rect x="140" y="170" width="20" height="20" fill="#fff" stroke="#000" stroke-width="1.5"/>
+                <text x="145" y="185" font-family="Arial" font-size="14" font-weight="bold">${choix.ref.split(',')[0]}</text>
+                
+                <line x1="250" y1="60" x2="250" y2="30" stroke="#000" stroke-width="1.5"/>
+                <line x1="250" y1="30" x2="150" y2="30" stroke="#000" stroke-width="1.5"/>
+                <polygon points="250,60 245,50 255,50" fill="#000"/>
+                
+                <rect x="50" y="20" width="100" height="20" fill="#fff" stroke="#000" stroke-width="1.5"/>
+                <line x1="80" y1="20" x2="80" y2="40" stroke="#000" stroke-width="1.5"/>
+                <line x1="125" y1="20" x2="125" y2="40" stroke="#000" stroke-width="1.5"/>
+                
+                <text x="60" y="35" font-family="Arial" font-size="16" font-weight="bold">${choix.symbole}</text>
+                <text x="88" y="35" font-family="Arial" font-size="14">${choix.tol}</text>
+                <text x="130" y="35" font-family="Arial" font-size="14">${choix.ref}</text>
+            </svg>`;
 
-        function generateExercise(type) {
-            document.getElementById('welcome-card').style.display = 'none';
-            document.getElementById('exercise-card').style.display = 'block';
-            document.getElementById('feedback-box').style.display = 'none';
+            enonce = `Sur le plan de cette pièce, vous observez le cadre de tolérance géométrique ci-dessus.<br><br>
+                      <strong>Travail demandé :</strong><br>
+                      1. Identifiez le type de spécification (symbole <strong>${choix.symbole}</strong>).<br>
+                      2. Décrivez le plus précisément possible la signification du cadre (schématisez la zone de tolérance).`;
 
-            // Reset du formulaire
-            document.getElementById('answer-form').reset();
-
-            if (type === 'random') {
-                const types = ['tolerance_geo', 'dimensionnel', 'chaine_cote'];
-                currentType = types[Math.floor(Math.random() * types.length)];
-            } else {
-                currentType = type;
-            }
-
-            const pool = database[currentType];
-            const randomIndex = Math.floor(Math.random() * pool.length);
-            currentExercise = pool[randomIndex];
-
-            // Remplissage de l'interface
-            document.getElementById('ex-type').innerText = currentType.replace('_', ' ');
-            document.getElementById('ex-id').innerText = "ID: #" + Math.floor(Math.random() * 900 + 100);
-            document.getElementById('ex-question').innerText = currentExercise.question;
-
-            // Rendu visuel (Dessin / Cadre GPS)
-            const drawingBox = document.getElementById('ex-drawing');
-            drawingBox.innerHTML = '';
-
-            if (currentExercise.symbol) {
-                // Modèle de cadre GPS standardisé HTML
-                let html = `<div class="gps-frame">`;
-                if(currentExercise.symbol === "⌖") html += `<div class="gps-cell" style="font-size:1.8rem; padding:0 12px;">ø</div>`;
-                html += `<div class="gps-cell">${currentExercise.symbol}</div>`;
-                html += `<div class="gps-cell">${currentExercise.val}</div>`;
-                if(currentExercise.ref) html += `<div class="gps-cell">${currentExercise.ref}</div>`;
-                html += `</div>`;
-                drawingBox.innerHTML = html;
-            } else if (currentExercise.customHTML) {
-                drawingBox.innerHTML = currentExercise.customHTML;
-            }
-
-            // Options radio boutons
-            const optionsList = document.getElementById('ex-options');
-            optionsList.innerHTML = '';
-            currentExercise.options.forEach((opt, idx) => {
-                const li = document.createElement('li');
-                li.className = 'option-item';
-                li.innerHTML = `<label style="display:flex; width:100%; cursor:pointer;"><input type="radio" name="gps_opt" value="${idx}"> <span style="margin-left:10px;">${opt}</span></label>`;
-                optionsList.appendChild(li);
-            });
+            solutionActuelle = `<strong>1. Identification :</strong> Spécification de <strong>${choix.nom}</strong>.<br><br>
+                                <strong>2. Décodage et Visualisation de la zone de tolérance :</strong><br> 
+                                ${choix.desc}<br>
+                                <div class="schema-container schema-solution">${choix.svgCorrig}</div>`;
         }
+        else if (categorie === "cotation") {
+            // (Logique conservée pour les chaînes de cotes - identique à la V2)
+            let A = Math.floor(Math.random() * 40) + 80; let tAsup = (Math.random() * 0.2 + 0.1).toFixed(2); let tAinf = -(Math.random() * 0.2).toFixed(2);
+            let B = Math.floor(Math.random() * 20) + 30; let tBsup = (Math.random() * 0.1 + 0.05).toFixed(2); let tBinf = -(Math.random() * 0.1).toFixed(2);
+            let C = Math.floor(Math.random() * 20) + 20; let tCsup = (Math.random() * 0.1 + 0.05).toFixed(2); let tCinf = -(Math.random() * 0.1).toFixed(2);
 
-        function checkAnswer() {
-            if (!currentExercise) return;
+            svg = `<svg viewBox="0 0 500 220" width="100%" height="220">
+                ${svgDefs}
+                <path d="M 50,80 L 450,80 L 450,180 L 50,180 Z" fill="#ecf0f1" stroke="#34495e" stroke-width="2"/>
+                <rect x="80" y="100" width="340" height="60" fill="#fff" />
+                <rect x="80" y="100" width="140" height="60" fill="#a29bfe" stroke="#2d3436" stroke-width="2"/>
+                <text x="145" y="135" font-family="Arial" font-size="16" fill="#fff" font-weight="bold">Pièce B</text>
+                <rect x="220" y="100" width="110" height="60" fill="#00cec9" stroke="#2d3436" stroke-width="2"/>
+                <text x="250" y="135" font-family="Arial" font-size="16" fill="#fff" font-weight="bold">Pièce C</text>
+                <line x1="80" y1="50" x2="420" y2="50" stroke="#2c3e50" stroke-width="1.5" marker-start="url(#arrow)" marker-end="url(#arrow)"/>
+                <text x="240" y="40" font-family="Arial" font-size="16" font-weight="bold">A</text>
+                <line x1="80" y1="50" x2="80" y2="100" stroke="#7f8c8d" stroke-width="1" stroke-dasharray="4"/>
+                <line x1="420" y1="50" x2="420" y2="100" stroke="#7f8c8d" stroke-width="1" stroke-dasharray="4"/>
+                <line x1="330" y1="130" x2="420" y2="130" stroke="#e74c3c" stroke-width="2.5" marker-start="url(#arrowRed)" marker-end="url(#arrowRed)"/>
+                <text x="365" y="120" font-family="Arial" font-size="18" fill="#e74c3c" font-weight="bold">J</text>
+            </svg>`;
+
+            enonce = `Le jeu est <span class="math">J = A - B - C</span>.<br>
+                      <ul>
+                        <li><strong>A</strong> = ${A} <sup>+${tAsup}</sup> / <sub>${tAinf}</sub></li>
+                        <li><strong>B</strong> = ${B} <sup>+${tBsup}</sup> / <sub>${tBinf}</sub></li>
+                        <li><strong>C</strong> = ${C} <sup>+${tCsup}</sup> / <sub>${tCinf}</sub></li>
+                      </ul>
+                      <strong>Travail :</strong> Calculez Jnom, Jmax et Jmin.`;
+
+            let Amax = A + parseFloat(tAsup); let Amin = A + parseFloat(tAinf);
+            let Bmax = B + parseFloat(tBsup); let Bmin = B + parseFloat(tBinf);
+            let Cmax = C + parseFloat(tCsup); let Cmin = C + parseFloat(tCinf);
+            let Jmax = Amax - Bmin - Cmin; let Jmin = Amin - Bmax - Cmax;
+
+            solutionActuelle = `<strong>1. Jeu Nominal :</strong> Jnom = ${A - B - C} mm<br><br>
+                                <strong>2. Jeu Maximum :</strong> <span class="math">Jmax = Amax - Bmin - Cmin</span><br>
+                                Jmax = ${Amax.toFixed(2)} - ${Bmin.toFixed(2)} - ${Cmin.toFixed(2)} = <strong>${Jmax.toFixed(2)} mm</strong><br><br>
+                                <strong>3. Jeu Minimum :</strong> <span class="math">Jmin = Amin - Bmax - Cmax</span><br>
+                                Jmin = ${Amin.toFixed(2)} - ${Bmax.toFixed(2)} - ${Cmax.toFixed(2)} = <strong>${Jmin.toFixed(2)} mm</strong>`;
+        }
+        else if (categorie === "ajustement") {
+            // (Logique conservée pour les ajustements - identique à la V2)
+            const ajustements = [ { arbre: "g6", alesage: "H7", type: "Avec Jeu", ecartH: "+21, 0", ecartA: "-7, -20" }, { arbre: "p6", alesage: "H7", type: "Avec Serrage", ecartH: "+21, 0", ecartA: "+35, +22" } ];
+            let diametre = [20, 25, 30][Math.floor(Math.random() * 3)];
+            let choix = ajustements[Math.floor(Math.random() * ajustements.length)];
+
+            svg = `<svg viewBox="0 0 400 200" width="100%" height="200">
+                ${svgDefs}
+                <rect x="80" y="30" width="240" height="140" fill="#bdc3c7" stroke="#2c3e50" stroke-width="2"/>
+                <rect x="80" y="70" width="240" height="60" fill="#fff" stroke="none"/>
+                <line x1="80" y1="70" x2="320" y2="70" stroke="#2c3e50" stroke-width="2"/>
+                <line x1="80" y1="130" x2="320" y2="130" stroke="#2c3e50" stroke-width="2"/>
+                <rect x="40" y="74" width="250" height="52" fill="#3498db" stroke="#2980b9" stroke-width="2"/>
+                <path d="M 290,74 L 300,100 L 290,126" fill="none" stroke="#2980b9" stroke-width="2"/> 
+                <line x1="30" y1="100" x2="350" y2="100" stroke="#000" stroke-width="1" stroke-dasharray="15,5,3,5"/>
+                <line x1="200" y1="20" x2="200" y2="70" stroke="#000" stroke-width="1"/>
+                <line x1="200" y1="130" x2="200" y2="180" stroke="#000" stroke-width="1"/>
+                <line x1="200" y1="30" x2="200" y2="170" stroke="#000" stroke-width="1.5" marker-start="url(#arrow)" marker-end="url(#arrow)"/>
+                <rect x="210" y="85" width="110" height="30" fill="rgba(255,255,255,0.9)" rx="4"/>
+                <text x="215" y="106" font-family="Arial" font-size="16" font-weight="bold">Ø ${diametre} ${choix.alesage}/${choix.arbre}</text>
+            </svg>`;
             
-            const selectedOpt = document.querySelector('input[name="gps_opt"]:checked');
-            if (!selectedOpt) {
-                alert("Veuillez sélectionner une réponse avant de valider.");
-                return;
-            }
-
-            const userAnswer = parseInt(selectedOpt.value);
-            const feedbackBox = document.getElementById('feedback-box');
-            const status = document.getElementById('feedback-status');
-            const exp = document.getElementById('feedback-explanation');
-
-            if (userAnswer === currentExercise.correct) {
-                feedbackBox.className = "feedback correct";
-                status.innerHTML = "🎉 <b>Correct !</b> Bien analysé.";
-            } else {
-                feedbackBox.className = "feedback wrong";
-                status.innerHTML = "❌ <b>Erreur de lecture.</b>";
-            }
+            enonce = `Ajustement : <strong>Ø ${diametre} ${choix.alesage}/${choix.arbre}</strong>.<br>
+                      - Alésage (ES / EI) : ${choix.ecartH} µm<br>
+                      - Arbre (es / ei) : ${choix.ecartA} µm<br>
+                      <strong>Travail :</strong> Calculez le Jeu/Serrage Maxi et Mini, et déduire la nature.`;
             
-            exp.innerHTML = currentExercise.exp;
+            let ES = parseFloat(choix.ecartH.split(',')[0]) / 1000; let EI = parseFloat(choix.ecartH.split(',')[1]) / 1000;
+            let es = parseFloat(choix.ecartA.split(',')[0]) / 1000; let ei = parseFloat(choix.ecartA.split(',')[1]) / 1000;
+
+            let Jmax = ES - ei; let Jmin = EI - es;
+
+            solutionActuelle = `<strong>1. Écarts d'assemblage :</strong><br>
+                                Jeu Maxi = (Alésage Maxi) - (Arbre Mini) = <strong>${Jmax.toFixed(3)} mm</strong><br>
+                                Jeu Mini = (Alésage Mini) - (Arbre Maxi) = <strong>${Jmin.toFixed(3)} mm</strong><br><br>
+                                <strong>2. Nature :</strong> <strong>${choix.type}</strong>.`;
         }
 
-        function nextExercise() {
-            generateExercise(currentType || 'random');
-        }
-    </script>
+        document.getElementById("schemaBox").innerHTML = svg;
+        document.getElementById("enonceText").innerHTML = enonce;
+    }
+
+    function afficherSolution() {
+        document.getElementById("solutionBox").style.display = "block";
+        document.getElementById("solutionText").innerHTML = solutionActuelle;
+        document.getElementById("btnSolution").style.display = "none";
+    }
+</script>
+
 </body>
 </html>
